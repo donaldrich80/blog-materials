@@ -1,0 +1,219 @@
+x-default: &default
+  method:
+    GET
+    # header:
+    #   SOME-HEADER: SOME-VALUE
+  timeout: 30
+  expectation:
+    - type: HTTP_STATUS
+      status_range: 200-205
+      incident: MAJOR
+    - type: LATENCY
+      threshold: 100
+      incident: PERFORMANCE
+    # - type: REGEX
+    #   regex: ".*<body>.*"
+    #   threshold: 10
+  allowed_fails: 3
+  action:
+    # - CREATE_INCIDENT
+    - UPDATE_STATUS
+    - PUSH_METRICS
+  public_incidents: false
+  latency_unit: ms
+  frequency: 60
+
+endpoints:
+  - name: Authelia
+    url: http://authelia:9091/api/health
+    <<: *default
+    component_id: 6
+
+  - name: Bitwarden
+    url: http://bitwarden:8080/alive
+    <<: *default
+    component_id: 2
+
+  - name: Directus
+    url: http://directus:8055/server/health
+    <<: *default
+    component_id: 12
+
+  - name: Docker Registry
+    url: http://registry:5001/metrics
+    <<: *default
+    component_id: 22
+
+  - name: Elasticsearch Health
+    url: elasticsearch:9200/_cluster/health?pretty
+    <<: *default
+    component_id: 21
+
+  - name: Elasticsearch Admin
+    url: http://elastichq:5000/api/status
+    <<: *default
+    component_id: 39
+
+  - name: Gluetun DNS Status
+    url: http://gluetun:8000/v1/dns/status
+    <<: *default
+    component_id: 18
+
+  - name: Gluetun Updater Status
+    url: http://gluetun:8000/v1/updater/status
+    <<: *default
+    component_id: 19
+
+  - name: Grafana
+    url: http://grafana:3000/api/health
+    <<: *default
+    component_id: 10
+
+  - name: Healthcheck
+    url: http://healthchecks:8000/ping/{{ healthchecks_ping_path }}
+    <<: *default
+    component_id: 7
+
+  - name: InfluxDB Health
+    url: http://influxdb:8086/health
+    <<: *default
+    component_id: 23
+
+  - name: InfluxDB Readiness
+    url: http://influxdb:8086/ready
+    <<: *default
+    component_id: 27
+
+  - name: Matomo Core
+    url: http://matomo:80/index.php?
+    <<: *default
+    component_id: 25
+
+  - name: Matomo Tracking
+    url: http://matomo:80/matomo.php
+    <<: *default
+    component_id: 26
+
+  - name: Minio Liveness
+    url: http://minio:9000/minio/health/live
+    <<: *default
+    component_id: 13
+
+  - name: Vault Health
+    url: http://vault:8200/v1/sys/health
+    <<: *default
+    component_id: 15
+
+  - name: Vault Seal Status
+    url: http://vault:8200/v1/sys/seal-status
+    <<: *default
+    component_id: 16
+
+  - name: Traefik Health
+    url: http://traefik:8080/ping
+    <<: *default
+    component_id: 17
+
+  - name: Minio Cluster
+    url: http://minio:9000/minio/health/cluster
+    <<: *default
+    component_id: 24
+
+  - name: Netdata
+    url: http://netdata:19999/api/v1/info
+    <<: *default
+    component_id: 14
+
+  - name: Pihole
+    url: http://192.168.1.100/admin/api.php
+    <<: *default
+    component_id: 4
+
+  - name: Plex
+    url: http://192.168.1.101:32400/identity
+    <<: *default
+    component_id: 5
+
+  - name: Prometheus Health
+    url: http://prometheus:9090/-/healthy
+    <<: *default
+    component_id: 8
+
+  - name: Prometheus Readiness
+    url: http://prometheus:9090/-/ready
+    <<: *default
+    component_id: 9
+
+  - name: Portainer
+    url: http://portainer:9000/api/status
+    <<: *default
+    component_id: 11
+
+  - name: Loki
+    url: http://loki:3100/ready
+    <<: *default
+    component_id: 28
+
+  - name: Promtail
+    url: http://promtail:9080/ready
+    <<: *default
+    component_id: 29
+
+  - name: Kong
+    url: http://kong:8001/status
+    <<: *default
+    component_id: 30
+
+  - name: Gitlab Runner
+    url: http://gitlab-runner-green:9252/metrics
+    <<: *default
+    component_id: 31
+
+  - name: Radarr API
+    url: http://radarr:7878/api/v3/health?apiKey={{ radarr_api_key }}
+    <<: *default
+    component_id: 32
+
+  - name: Lidarr API
+    url: http://lidarr:8686/api/v1/system/status?apiKey={{ lidarr_api_key }}
+    <<: *default
+    component_id: 33
+
+  - name: Sonarr API
+    url: http://sonarr:8989/api/v3/health?apiKey={{ sonarr_api_key }}
+    <<: *default
+    component_id: 34
+
+  - name: Tautulli API
+    url: http://tautulli:8181/api/v2?apikey={{ tautulli_api_key }}&cmd=status
+    <<: *default
+    component_id: 35
+
+  - name: Jackett API
+    url: http://gluetun:9117/api/v2.0/indexers/all/results/torznab?apikey={{ jackett_api_key }}
+    <<: *default
+    component_id: 36
+
+  - name: Nextcloud API
+    url: http://nextcloud:80
+    # url: http://nextcloud/ocs/v2.php/apps/serverinfo/api/v1/info
+    <<: *default
+    component_id: 37
+
+
+
+cachet:
+  api_url: http://cachet:8000/api/v1
+  token:
+    - type: TOKEN
+      value: {{ cachet_token }}
+webhooks:
+  - url: "webhook_url"
+    params:
+      title: "{title}"
+      message: "{message}"
+      priority: 5
+messages:
+  incident_outage: "{name} is unavailable"
+  incident_operational: "{name} is operational"
+  incident_performance: "{name} has degraded performance"
