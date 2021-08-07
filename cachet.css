@@ -1,0 +1,90 @@
+html {
+  background: transparent;
+}
+
+
+body.status-page .list-group .list-group-item {
+    background-color: rgba(26, 32, 46, 1);
+}
+
+.panel, body.status-page .list-group.components {
+   background: none;
+}
+
+div.panel-heading {
+    background-color: rgb(22, 27, 34);
+}
+
+body.status-page .timeline .moment .status-icon {
+    background: rgb(35, 56, 118);
+    border-color: #166197;
+}
+
+
+body.status-page {
+    background-color: rgba(26, 32, 46, 1);
+}
+
+.alert.alert-info {
+    background-color: rgba(35, 56, 118, 1);
+    border-color: #166197;
+    color: rgba(164, 202, 254, 1);
+}
+
+.alert.alert-danger {
+    background-color: #36191c;
+    border-color: #da3633;
+    color: #f85149;
+}
+
+body.status-page .timeline .moment:before {
+    background: #166197;
+}
+
+.btn.btn-danger {
+    background-color: rgb(33, 38, 45);
+    border-color: rgb(48, 54, 61);
+    color: rgb(248, 81, 73);
+}
+
+.btn.btn-default {
+    color: rgb(201, 209, 217);
+    background-color: rgb(33, 38, 45);
+    border-color: rgb(48, 54, 61);
+}
+
+body.status-page .timeline .moment .panel.panel-message {
+    border: 1px solid rgb(48, 54, 61);
+}
+
+body.status-page .timeline .moment .list-group.components .panel-body, body.status-page .timeline .moment .panel .panel-body {
+    border-top: 1px solid rgb(48, 54, 61);
+}
+
+body.status-page .list-group .list-group-item {
+    border: 0;
+}
+
+body.status-page .list-group .list-group-item.group-name {
+    background-color: rgb(22, 27, 34);
+}
+
+.panel, body.status-page .list-group.components {
+    border: 1px solid rgb(48, 54, 61);
+}
+
+body.status-page .list-group.components {
+    border-color: rgb(48, 54, 61);
+}
+
+a.links {
+    background-color: rgb(22, 27, 34);
+}
+
+.panel-default > .panel-heading {
+    background-color: rgb(22, 27, 34);
+}
+
+i.icon.ion-flag.oranges {
+   color: rgb(255, 86, 86);
+}
